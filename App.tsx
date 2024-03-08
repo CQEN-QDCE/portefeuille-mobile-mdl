@@ -30,6 +30,7 @@ import { Cbor } from 'mdl-ts';
 import { MobileDocument } from 'mdl-ts';
 import { Hex } from 'mdl-ts';
 global.Buffer = global.Buffer || require('buffer').Buffer
+var rs = require('jsrsasign');
 
 type SectionProps = PropsWithChildren<{
   title: string;

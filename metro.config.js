@@ -8,18 +8,18 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
  */
 const config = {};
 
-module.exports = {
-    resolver: {
-      extraNodeModules: {
-        stream: require.resolve('stream-browserify'),
+module.exports = mergeConfig(getDefaultConfig(__dirname), {
+  resolver: {
+    extraNodeModules: {
+      stream: require.resolve('stream-browserify'),
+    },
+  },
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
       },
-    },
-    transformer: {
-      getTransformOptions: async () => ({
-        transform: {
-          experimentalImportSupport: false,
-          inlineRequires: true,
-        },
-      }),
-    },
-  };
+    }),
+  },
+});
