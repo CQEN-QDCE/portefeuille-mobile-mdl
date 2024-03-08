@@ -53,6 +53,16 @@ buck-out
 /packages/react-native/ReactAndroid/src/main/gen
 /.cpplsp.buckd
 
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+.cxx/
+
 # Android Studio
 .project
 .settings

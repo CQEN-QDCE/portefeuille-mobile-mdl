@@ -10,8 +10,15 @@
     "test": "jest"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
+    "cbor-rn-prereqs": "^9.0.0",
+    "jsrsasign": "^11.1.0",
+    "mdl-ts": "file:../mdl-ts/mdl-ts-0.1.0.tgz",
     "react": "18.2.0",
-    "react-native": "0.73.5"
+    "react-native": "0.73.5",
+    "readable-stream": "^4.5.2",
+    "stream-browserify": "^3.0.0",
+    "text-encoding-polyfill": "^0.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
