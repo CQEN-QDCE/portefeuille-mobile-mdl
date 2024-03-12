@@ -32,6 +32,7 @@ require('cbor-rn-prereqs');
 import { Cbor } from 'mdl-ts';
 import { MobileDocument } from 'mdl-ts';
 import { Hex } from 'mdl-ts';
+import Scan from './scan';
 global.Buffer = global.Buffer || require('buffer').Buffer
 var rs = require('jsrsasign');
 
@@ -73,6 +74,7 @@ function App(): React.JSX.Element {
   };
 
   return (
+    /*
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -135,6 +137,8 @@ function App(): React.JSX.Element {
         </View>
       </ScrollView>
     </SafeAreaView>
+    */
+    <Scan />
   );
 }
 

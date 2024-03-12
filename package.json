@@ -17,6 +17,9 @@
     "mdl-ts": "file:../mdl-ts/mdl-ts-0.1.0.tgz",
     "react": "18.2.0",
     "react-native": "0.73.5",
+    "react-native-camera": "^4.2.1",
+    "react-native-qrcode-scanner": "^1.5.5",
+    "react-native-qrcode-svg": "^6.3.0",
     "readable-stream": "^4.5.2",
     "stream-browserify": "^3.0.0",
     "text-encoding-polyfill": "^0.6.7"
