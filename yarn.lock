@@ -5304,9 +5304,9 @@ marky@^1.2.2:
   resolved "https://registry.yarnpkg.com/marky/-/marky-1.2.5.tgz#55796b688cbd72390d2d399eaaf1832c9413e3c0"
   integrity sha512-q9JtQJKjpsVxCRVgQ+WapguSbKC3SQ5HEzFGPAJMStgh3QjCawp00UKv3MTTAArTmGmmPUvllHZoNbZ3gs0I+Q==
 
-"mdl-ts@file:../mdl-ts/mdl-ts-0.1.0.tgz":
+"mdl-ts@file:./mdl-ts-0.1.0.tgz":
   version "0.1.0"
-  resolved "file:../mdl-ts/mdl-ts-0.1.0.tgz#1c5f09cab16686f9b7215ffcb8609c6a18e13da5"
+  resolved "file:./mdl-ts-0.1.0.tgz#1c5f09cab16686f9b7215ffcb8609c6a18e13da5"
   dependencies:
     "@sphereon/oid4vci-client" "^0.10.1"
     "@types/cose-js" "^0.8.3"
