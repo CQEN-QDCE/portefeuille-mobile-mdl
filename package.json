@@ -14,7 +14,7 @@
     "buffer": "^6.0.3",
     "cbor-rn-prereqs": "^9.0.0",
     "jsrsasign": "^11.1.0",
-    "mdl-ts": "file:../mdl-ts/mdl-ts-0.1.0.tgz",
+    "mdl-ts": "file:./mdl-ts-0.1.0.tgz",
     "react": "18.2.0",
     "react-native": "0.73.5",
     "react-native-camera": "^4.2.1",
