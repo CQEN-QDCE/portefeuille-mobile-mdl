@@ -258,7 +258,6 @@ jobs:
         # Actual environment variables are not being picked up
         # by the build so they're put into an .env file.
       - name: Create environment settings
-        if: env.CQEN_MEDIATOR_URL != null && env.OCA_URL != null && env.MCN_MEDIATOR_URL != null
         working-directory: app
         env:
           CQEN_MEDIATOR_URL: ${{ secrets.CQEN_MEDIATOR_URL }}
