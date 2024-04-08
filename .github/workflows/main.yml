@@ -259,14 +259,6 @@ jobs:
         # by the build so they're put into an .env file.
       - name: Create environment settings
         working-directory: app
-        env:
-          CQEN_MEDIATOR_URL: ${{ secrets.CQEN_MEDIATOR_URL }}
-          MCN_MEDIATOR_URL: ${{ secrets.MCN_MEDIATOR_URL }}
-          OCA_URL: ${{ vars.OCA_URL }}
-        run: |
-          echo "CQEN_MEDIATOR_URL=${CQEN_MEDIATOR_URL}" >.env
-          echo "MCN_MEDIATOR_URL=${MCN_MEDIATOR_URL}" >>.env
-          echo "OCA_URL=${OCA_URL}" >>.env
 
       - name: Create release keystore
         #if: github.ref_name == 'main' && needs.check-android-secrets.outputs.isReleaseBuild == 'true'
