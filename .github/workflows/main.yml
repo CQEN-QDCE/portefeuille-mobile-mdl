@@ -252,9 +252,7 @@ jobs:
       - name: Install dependencies
         working-directory: ./
         run: |
-          # yarn install --immutable && \
-          # git status
-          npm install && \
+          yarn install --immutable && \
           git status
 
         # Actual environment variables are not being picked up
