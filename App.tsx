@@ -36,6 +36,13 @@ import Scan from './scan';
 global.Buffer = global.Buffer || require('buffer').Buffer
 var rs = require('jsrsasign');
 
+const TextEncodingPolyfill = require('text-encoding');
+
+Object.assign(global, {
+    TextEncoder: TextEncodingPolyfill.TextEncoder,
+    TextDecoder: TextEncodingPolyfill.TextDecoder
+});
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
