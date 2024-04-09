@@ -278,7 +278,7 @@ jobs:
 
       - name: Android release build
         #if: github.ref_name == 'main' && needs.check-android-secrets.outputs.isReleaseBuild == 'true'
-        working-directory: app/android
+        working-directory: android
         env:
           PLAY_STORE_JKS_ALIAS: ${{ secrets.PLAY_STORE_JKS_ALIAS }}
           PLAY_STORE_JKS_PASSWD: ${{ secrets.PLAY_STORE_JKS_PASSWD }}
@@ -303,14 +303,14 @@ jobs:
         with:
           name: android
           path: |
-            app/android/app/build/outputs/bundle/release/app-release.aab
-            app/android/app/build/outputs/apk/release/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+            android/app/build/outputs/apk/release/app-release.apk
       - name: Upload Android artifact
         if: github.ref_name == 'main' && needs.check-android-secrets.outputs.isReleaseBuild == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: android-artifact
-          path: app/android/app/build/outputs/bundle/release/app-release.aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 7
 
@@ -337,6 +337,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-artifact
-          path: app/android/app/build/outputs/bundle/release/app-release.aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 7
