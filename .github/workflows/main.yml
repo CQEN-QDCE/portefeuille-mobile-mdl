@@ -313,7 +313,7 @@ jobs:
 
       - name: Ship to Google Play
         if: github.ref_name == 'main' && needs.check-android-secrets.outputs.isReleaseBuild == 'true'
-        working-directory: .
+        working-directory: ./
         env:
           GOOGLE_API_CREDENTIALS_BASE64: ${{ secrets.GOOGLE_API_CREDENTIALS_BASE64 }}
           GOOGLE_API_CREDENTIALS: "api_keys.json"
@@ -327,6 +327,8 @@ jobs:
           # when we updated to yarn we started getting an error with paths
           # and had to add `/android` to the path.
           echo "${GOOGLE_API_CREDENTIALS_BASE64}" | base64 -d >${GOOGLE_API_CREDENTIALS} && \
+          npm i
+          chmod +x deploy-to-playstore.js
           node ./deploy-to-playstore.js
 
       - name: Upload Android artifact
