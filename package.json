@@ -23,7 +23,8 @@
     "readable-stream": "^4.5.2",
     "stream-browserify": "^3.0.0",
     "text-encoding": "^0.7.0",
-    "text-encoding-polyfill": "^0.6.7"
+    "text-encoding-polyfill": "^0.6.7",
+    "googleapis": "^109.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
