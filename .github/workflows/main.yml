@@ -48,7 +48,7 @@ jobs:
     needs: [check-ios-secrets]
     runs-on: macos-13
     env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/app/Gemfile
+      BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile
     steps:
       - uses: actions/checkout@v4
 
@@ -61,8 +61,6 @@ jobs:
 
       - name: Configure ruby
         uses: ruby/setup-ruby@v1
-        with:
-          working-directory: ./app
 
       - name: What XCode are we using?
         run: |
