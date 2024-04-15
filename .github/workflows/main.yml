@@ -82,7 +82,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            app/ios/Pods
+            ios/Pods
             ~/Library/Caches/CocoaPods
             ~/.cocoapods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -93,7 +93,7 @@ jobs:
         id: cache-dd-restore
         uses: actions/cache/restore@v3
         with:
-          path: app/ios/xbuild/Build
+          path: ios/xbuild/Build
           key: ${{ runner.os }}-dd-xcode
 
       - name: Install dependencies
@@ -104,7 +104,7 @@ jobs:
 
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: app/ios
+        working-directory: ios
         run: |
           bundle install --frozen --gemfile=${BUNDLE_GEMFILE} && \
           pod install && \
@@ -112,35 +112,13 @@ jobs:
           git diff Podfile.lock
 
       - name: Bump Build No.
-        working-directory: app/ios
+        working-directory: ios
         env:
           CURRENT_PROJECT_VERSION: ${{ env.appBuildNumber }}
           MARKETING_VERSION: ${{ env.appBuildVersion }}
         run: |
           agvtool new-version ${CURRENT_PROJECT_VERSION} && \
           agvtool new-marketing-version ${MARKETING_VERSION}
-
-        # Actual environment variables are not being picked up
-        # by the build so they're put into an .env file.
-      - name: Create environment settings
-        if: env.CQEN_MEDIATOR_URL != null && env.OCA_URL != null && env.MCN_MEDIATOR_URL != null
-        working-directory: app
-        env:
-          CQEN_MEDIATOR_URL: ${{ secrets.CQEN_MEDIATOR_URL }}
-          MCN_MEDIATOR_URL: ${{ secrets.MCN_MEDIATOR_URL }}
-          OCA_URL: ${{ vars.OCA_URL }}
-        run: |
-          echo "CQEN_MEDIATOR_URL=${CQEN_MEDIATOR_URL}" >.env
-          echo "MCN_MEDIATOR_URL=${MCN_MEDIATOR_URL}" >>.env
-          echo "OCA_URL=${OCA_URL}" >>.env
-
-      - name: Set Push Notification Capability
-        working-directory: app/ios/AriesBifold
-        env:
-          MEDIATOR_USE_PUSH_NOTIFICATIONS: false
-          MEDIATOR_LABEL: Mediator
-        run: |
-          mv DEVELOPMENT.AriesBifold.entitlements AriesBifold.entitlements
 
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
       - name: Create Provisioning Profile
@@ -160,15 +138,15 @@ jobs:
 
       - name: Release build
         if: github.ref_name == 'main' && needs.check-ios-secrets.outputs.isReleaseBuild == 'true'
-        working-directory: app/ios
+        working-directory: ios
         run: |
           xcodebuild \
-          -workspace AriesBifold.xcworkspace \
-          -scheme AriesBifold \
+          -workspace mdlHolder.xcworkspace \
+          -scheme mdlHolder \
           -configuration Release \
           -derivedDataPath xbuild \
           -xcconfig ../../release.xcconfig \
-          -archivePath AriesBifold.xcarchive \
+          -archivePath mdlHolder.xcarchive \
           -sdk iphoneos \
           -verbose \
           archive
@@ -177,12 +155,12 @@ jobs:
         id: cache-dd-save
         uses: actions/cache/save@v3
         with:
-          path: app/ios/xbuild/Build
+          path: ios/xbuild/Build
           key: ${{ steps.cache-dd-restore.outputs.cache-primary-key }}
 
       - name: Archive & Sign
         if: github.ref_name == 'main' && needs.check-ios-secrets.outputs.isReleaseBuild == 'true'
-        working-directory: app/ios
+        working-directory: ios
         run: |
           xcodebuild \
           -exportArchive \
@@ -199,7 +177,7 @@ jobs:
 
       - name: Ship to iTunes
         if: github.ref_name == 'main' && needs.check-ios-secrets.outputs.isReleaseBuild == 'true'
-        working-directory: app/ios
+        working-directory: ios
         env:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }}
@@ -220,7 +198,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ios-artifact
-          path: app/ios/export/AriesBifold.ipa
+          path: ios/export/AriesBifold.ipa
           if-no-files-found: error
           retention-days: 7
 
