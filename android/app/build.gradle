@@ -90,6 +90,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('mdlHolder.keystore')
+            storePassword System.getenv("PLAY_STORE_JKS_PASSWD")
+            keyAlias System.getenv("PLAY_STORE_JKS_ALIAS")
+            keyPassword System.getenv("PLAY_STORE_JKS_PASSWD")
+        }
     }
     buildTypes {
         debug {
