@@ -91,7 +91,7 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('mdlHolder.keystore')
+            storeFile file('release.keystore')
             storePassword System.getenv("PLAY_STORE_JKS_PASSWD")
             keyAlias System.getenv("PLAY_STORE_JKS_ALIAS")
             keyPassword System.getenv("PLAY_STORE_JKS_PASSWD")
