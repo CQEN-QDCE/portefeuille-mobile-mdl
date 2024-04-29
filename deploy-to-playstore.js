@@ -104,7 +104,7 @@ const main = async () => {
         releases: [
           {
             name: `v${process.env.VERSION_NAME}-${process.env.GITHUB_RUN_NUMBER}`,
-            status: 'completed', // draft, inProgress, completed
+            status: 'draft', // draft, inProgress, completed
             // userFraction: 0.99,
             versionCodes: [`${process.env.GITHUB_RUN_NUMBER ? process.env.GITHUB_RUN_NUMBER : 0}`],
             releaseNotes: [
