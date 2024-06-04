@@ -3,8 +3,7 @@ import { TouchableOpacity, Text, View, Image, ImageBackground, BackHandler } fro
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import styles from './scanStyle';
 import axios, { AxiosResponse, AxiosInstance } from 'axios';
-import { Cbor, Hex, MobileDocument } from 'mdl-ts';
-import { VcHolder } from 'mdl-ts';
+import { Cbor, Hex, MobileDocument, OpenID4VCIClient } from 'mdl-ts';
 class Scan extends Component {
     private issuerSigned: any;
     constructor(props: any) {
@@ -22,14 +21,30 @@ class Scan extends Component {
             ScanResult: false
         })
         
-//        try { 
-//            const holder = new VcHolder({kid: "123", did: "did:example:123", privKeyHex: "123"});
-//            console.log('credentials2: ' + e.data);
-//            const credentials2 = await holder.getCredentialFromOffer(e.data);
-//            console.log('credentials2: ' + JSON.stringify(credentials2)); 
-//        } catch (e) {
-//            console.log('error: ' + e); 
-//        }
+        try { 
+            const holder = new OpenID4VCIClient({kid: "123", did: "did:example:123", privKeyHex: "123"});
+            //console.log('credentials2: ' + e.data);
+            const credentials2 = await holder.getCredentialFromOffer(e.data);
+            //console.log('credentials2: ' + JSON.stringify(credentials2)); 
+            const issuerSigned = Cbor.decode(MobileDocument, Hex.decode(credentials2[0]));
+            const mDL: any = {};
+            mDL.docType = issuerSigned.docType;
+            let mDLNamespace = issuerSigned?.issuerSigned?.namespaces.get('org.iso.18013.5.1');
+            if (mDLNamespace) {
+                for (const issuerItem of mDLNamespace) {
+                    if (issuerItem.elementIdentifier === 'given_name') mDL.firstName = issuerItem.elementValue;
+                    if (issuerItem.elementIdentifier === 'family_name') mDL.lastName = issuerItem.elementValue;
+                }
+            }
+            this.setState({
+                result: mDL,
+                scan: false,
+                ScanResult: true
+            })
+        } catch (e) {
+            console.log('error: ' + e); 
+        }
+        /*
         const qrCodeData = e.data.replace('openid-credential-offer://?credential_offer=','');
         const credentialOffer = JSON.parse(decodeURIComponent(qrCodeData));
 
@@ -82,6 +97,8 @@ class Scan extends Component {
         };
 
         const credentialResponse: AxiosResponse = await client.post(`${credentialIssuerUrl}/credential`, credentialRequest, { headers: { 'Authorization': 'BEARER ' + accessToken.access_token } });  
+        
+        
         const issuerSigned = Cbor.decode(MobileDocument, Hex.decode(credentialResponse.data.credential));
         const mDL: any = {};
         mDL.docType = issuerSigned.docType;
@@ -97,6 +114,7 @@ class Scan extends Component {
             scan: false,
             ScanResult: true
         })
+        */
     }
     activeQR = () => {
         this.setState({ scan: true })
